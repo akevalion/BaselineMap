@@ -75,3 +75,8 @@ MBBaselineModel >> name: anObject [
 
 	name := anObject
 ]
+
+{ #category : #printing }
+MBBaselineModel >> printOn: stream [
+	stream << name
+]
