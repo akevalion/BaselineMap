@@ -2,7 +2,7 @@
 [ Metacello new
     baseline: 'BaselineMap';
     repository: 'github://akevalion/BaselineMap';
-    load: 'Full' ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
+    load ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
 
 "We identify the unit tests contained in the loaded application"
 unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'BaselineMap' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
