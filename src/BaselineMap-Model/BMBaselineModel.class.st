@@ -2,7 +2,7 @@
 baseline model for baseline maps
 "
 Class {
-	#name : #MBBaselineModel,
+	#name : #BMBaselineModel,
 	#superclass : #Object,
 	#instVars : [
 		'class',
@@ -14,69 +14,69 @@ Class {
 }
 
 { #category : #comparing }
-MBBaselineModel >> = another [
+BMBaselineModel >> = another [
 	^ name = another name
 ]
 
 { #category : #accessing }
-MBBaselineModel >> baselineClass [
+BMBaselineModel >> baselineClass [
 
 	^ class
 ]
 
 { #category : #accessing }
-MBBaselineModel >> baselineClass: aClass [
+BMBaselineModel >> baselineClass: aClass [
 	class := aClass
 ]
 
 { #category : #accessing }
-MBBaselineModel >> class1 [
+BMBaselineModel >> class1 [
 
 	^ class
 ]
 
 { #category : #accessing }
-MBBaselineModel >> dependencies [
+BMBaselineModel >> dependencies [
 
 	^ dependencies
 ]
 
 { #category : #accessing }
-MBBaselineModel >> dependencies: anObject [
+BMBaselineModel >> dependencies: anObject [
 
 	dependencies := anObject
 ]
 
 { #category : #comparing }
-MBBaselineModel >> hash [
+BMBaselineModel >> hash [
 	^ name hash
 ]
 
 { #category : #accessing }
-MBBaselineModel >> level [
+BMBaselineModel >> level [
 
 	^ level
 ]
 
 { #category : #accessing }
-MBBaselineModel >> level: anObject [
+BMBaselineModel >> level: anObject [
 
 	level := anObject
 ]
 
 { #category : #accessing }
-MBBaselineModel >> name [
+BMBaselineModel >> name [
 
 	^ name
 ]
 
 { #category : #accessing }
-MBBaselineModel >> name: anObject [
+BMBaselineModel >> name: anObject [
 
 	name := anObject
 ]
 
 { #category : #printing }
-MBBaselineModel >> printOn: stream [
+BMBaselineModel >> printOn: stream [
 	stream << name
 ]

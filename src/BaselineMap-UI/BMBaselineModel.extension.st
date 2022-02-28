@@ -1,7 +1,7 @@
-Extension { #name : #MBBaselineModel }
+Extension { #name : #BMBaselineModel }
 
 { #category : #'*BaselineMap-UI' }
-MBBaselineModel >> inspectionBaselineMap: builder [
+BMBaselineModel >> inspectionBaselineMap: builder [
 	<inspectorPresentationOrder: 10 title: 'Dependencies Map'>
 	| canvas |
 	canvas := BMMapBuilder new

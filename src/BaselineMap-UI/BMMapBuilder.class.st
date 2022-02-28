@@ -92,7 +92,7 @@ BMMapBuilder >> models [
 
 { #category : #'instance creation' }
 BMMapBuilder >> newModel [
-	^ MBBaselineModel new
+	^ BMBaselineModel new
 ]
 
 { #category : #'instance creation' }
