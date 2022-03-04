@@ -15,7 +15,8 @@ BaselineOfBaselineMap >> baseline: spec [
 		spec
 			package: 'BaselineMap-Model';
 			package: 'BaselineMap-UI' with: [ spec requires: 'Roassal3' ];
-			package: 'BaselineMap-Tests'.
+			package: 'BaselineMap-Tests';
+			package: 'BaselineMap-UI-Customs'.
 	]
 ]
 

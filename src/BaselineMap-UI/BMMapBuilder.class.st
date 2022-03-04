@@ -11,6 +11,13 @@ Class {
 	#category : #'BaselineMap-UI-BaselineMap-UI'
 }
 
+{ #category : #hooks }
+BMMapBuilder >> adjustWidth: aMaxNumber [
+	shapes do: [ :shape | 
+		shape children first width: aMaxNumber.
+		shape adjustToChildren ].
+]
+
 { #category : #accessing }
 BMMapBuilder >> baseline [
 	^ baseline
@@ -31,6 +38,11 @@ BMMapBuilder >> computeModels [
 	todo := LinkedList with: rootModel.
 	self findModels: todo.
 	
+]
+
+{ #category : #'accessing - defaults' }
+BMMapBuilder >> cornerRadius [
+	^ 10
 ]
 
 { #category : #'accessing - defaults' }
@@ -91,6 +103,33 @@ BMMapBuilder >> models [
 ]
 
 { #category : #'instance creation' }
+BMMapBuilder >> newBorderFor: anObject [
+	^ nil
+]
+
+{ #category : #'instance creation' }
+BMMapBuilder >> newBox [
+	^ RSBox new
+		yourself.
+]
+
+{ #category : #'instance creation' }
+BMMapBuilder >> newLabelFor: model [
+	^ RSLabel new
+		text: model name;
+		color: Color black;
+		yourself.
+]
+
+{ #category : #'instance creation' }
+BMMapBuilder >> newLineBuilder [
+	^ RSLineBuilder arrowedLine
+		withBorderAttachPoint;
+		color: Color black;
+		yourself
+]
+
+{ #category : #'instance creation' }
 BMMapBuilder >> newModel [
 	^ BMBaselineModel new
 ]
@@ -120,13 +159,11 @@ BMMapBuilder >> newModelFromDependency: aString level: level [
 { #category : #'instance creation' }
 BMMapBuilder >> newShapeFor: model [
 	| label box |
-	label := RSLabel new
-		text: model name;
-		color: Color black;
-		yourself.
-	box := RSBox new
+	label := self newLabelFor: model.
+	box := self newBox
 		extent: label extent + 10;
-		cornerRadius: 10;
+		border: (self newBorderFor: model);
+		cornerRadius: self cornerRadius;
 		yourself.
 	^ ({ box. label } asShapeFor: model) 
 		draggable;
@@ -153,17 +190,13 @@ BMMapBuilder >> renderLayer: layerGroup level: key in: aCanvas [
 		shape := self newShapeFor: model.
 		max := max max: shape width.
 		shape ] as: RSGroup.
-	shapes do: [ :shape | 
-		shape children first width: max.
-		shape adjustToChildren ].
+	self adjustWidth: max.
 	aCanvas addAll: shapes.
 ]
 
 { #category : #hooks }
 BMMapBuilder >> renderLinesOn: aCanvas [
-	RSLineBuilder arrowedLine
-		withBorderAttachPoint;
-		color: Color black;
+	self newLineBuilder
 		canvas: aCanvas;
 		connectToAll: [ :model |
 			model dependencies collect: [ :depName |

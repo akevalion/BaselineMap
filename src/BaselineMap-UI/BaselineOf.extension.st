@@ -4,7 +4,7 @@ Extension { #name : #BaselineOf }
 BaselineOf >> inspectionBaselineMap [
 	<inspectorPresentationOrder: 10 title: 'Dependencies Map'>
 	| canvas |
-	canvas := BMMapBuilder new
+	canvas := BMSettings classMapBuilder new
 		baseline: self class;
 		build;
 		canvas.

@@ -40,7 +40,7 @@ BMMapBrowserToolMorph >> build [
 
 { #category : #building }
 BMMapBrowserToolMorph >> buildBaselineMap [
-	^ BMMapBuilder new
+	^ BMSettings classMapBuilder new
 		baseline: self targetClass;
 		build;
 		canvas.

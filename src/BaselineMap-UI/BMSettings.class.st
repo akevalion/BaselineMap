@@ -12,16 +12,6 @@ Class {
 }
 
 { #category : #accessing }
-BMSettings class >> baselineMap [
-	^ baselineMap ifNil: [ true ]
-]
-
-{ #category : #accessing }
-BMSettings class >> baselineMap: aBoolean [
-	baselineMap := aBoolean
-]
-
-{ #category : #accessing }
 BMSettings class >> classMapBuilder [
 	^ classMapBuilder ifNil: [ self defaultClassMapBuilder ]
 ]
