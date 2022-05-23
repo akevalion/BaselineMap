@@ -8,7 +8,7 @@ Class {
 		'models',
 		'baseline'
 	],
-	#category : #'BaselineMap-UI-BaselineMap-UI'
+	#category : #'BaselineMap-UI'
 }
 
 { #category : #hooks }
