@@ -1,6 +1,6 @@
 
 echo ${GITHUB_REF}
-echo ${{ github.event.repository.name }}
+echo ${GITHUB_REPOSITORY}
 curl -L https://get.pharo.org/64/alpha+vm | bash
 ./pharo --headless Pharo.image ./scripts/runTest.st
 
