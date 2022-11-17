@@ -1,10 +1,13 @@
 
-echo ${GITHUB_REF}
-echo ${GITHUB_REPOSITORY}
+echo 
+echo 
 curl -L https://get.pharo.org/64/alpha+vm | bash
 ./pharo --headless Pharo.image ./scripts/runTest.st
 
-
+yovi="/tmp/io.txt"
+echo ${GITHUB_REF##*/} > $yovi
+echo ${GITHUB_REPOSITORY} >> $yovi
+cat $yovi
 
 FILE=/tmp/result.txt
 if [ ! -f "$FILE" ]; then
