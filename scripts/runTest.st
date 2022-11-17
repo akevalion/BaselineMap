@@ -5,7 +5,7 @@ stream := path asFileReference writeStream.
 
 secrets := '/tmp/io.txt' asFileReference contents lines.
 branchName := secrets first.
-repoName := secrets seconds.
+repoName := secrets second.
 repository := 'github://', repoName, ':', branchName.
 "We load the application software analyzer"
 [ Metacello new
