@@ -3,10 +3,10 @@ path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
-secrets := '/tmp/io.txt' asFileReference contents.
-stream << 'repo jujuju'.
-stream << secrets.
-repository := 'github://akevalion/BaselineMap'.
+secrets := '/tmp/io.txt' asFileReference contents lines.
+branchName := secrets first.
+repoName := secrets seconds.
+repository := 'github://', repoName, ':', branchName.
 "We load the application software analyzer"
 [ Metacello new
     baseline: 'BaselineMap';
@@ -15,8 +15,6 @@ repository := 'github://akevalion/BaselineMap'.
 
 "We identify the unit tests contained in the loaded application"
 unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'BaselineMap' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
-
-
 
 
 numberOfPassed := 0.
