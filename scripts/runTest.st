@@ -1,16 +1,22 @@
+"We create a file that will contain the result of the test execution"
+path := '/tmp/result.txt'.
+path asFileReference exists ifTrue: [ path asFileReference delete ].
+stream := path asFileReference writeStream.
+
+secrets := '/tmp/io.txt' asFileReference contents.
+stream << secrets.
+repository := 'github://akevalion/BaselineMap'.
 "We load the application software analyzer"
 [ Metacello new
     baseline: 'BaselineMap';
-    repository: 'github://akevalion/BaselineMap';
+    repository: repository;
     load ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
 
 "We identify the unit tests contained in the loaded application"
 unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'BaselineMap' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
 
-"We create a file that will contain the result of the test execution"
-path := '/tmp/result.txt'.
-path asFileReference exists ifTrue: [ path asFileReference delete ].
-stream := path asFileReference writeStream.
+
+
 
 numberOfPassed := 0.
 "We run the unit tests"
