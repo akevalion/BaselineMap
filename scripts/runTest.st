@@ -4,6 +4,7 @@ path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
 secrets := '/tmp/io.txt' asFileReference contents.
+stream << 'repo jujuju'.
 stream << secrets.
 repository := 'github://akevalion/BaselineMap'.
 "We load the application software analyzer"
