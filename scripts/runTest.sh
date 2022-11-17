@@ -2,6 +2,8 @@
 curl -L https://get.pharo.org/64/alpha+vm | bash
 ./pharo --headless Pharo.image ./scripts/runTest.st
 
+echo ${GITHUB_REF##*/}
+
 FILE=/tmp/result.txt
 if [ ! -f "$FILE" ]; then
     echo "ERROR: $FILE does not exists!"
