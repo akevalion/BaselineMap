@@ -1,9 +1,6 @@
 curl -L https://get.pharo.org/64/alpha+vm | bash
 
 # put credentials then pharo can read this file and load the correct repository
-yovi="/tmp/io.txt"
-echo ${GITHUB_REF##*/} > $yovi
-echo ${GITHUB_REPOSITORY} >> $yovi
 
 ./pharo --headless Pharo.image ./scripts/runTest.st
 
