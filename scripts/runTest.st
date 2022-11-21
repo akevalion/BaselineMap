@@ -1,21 +1,29 @@
+| path stream repoPath |
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
-secrets := '/tmp/io.txt' asFileReference contents lines.
-branchName := secrets first.
-repoName := secrets second.
-repository := 'github://', repoName, ':', branchName.
+
+Stdio stdout << 'ciPreLoading.st - Adding $GITHUB_WORKSPACE directory to Iceberg: '.
+repoPath := Smalltalk os environment
+	at: 'GITHUB_WORKSPACE'
+	ifAbsent: [ Stdio stdout nextPutAll: 'NOT DEFINED, WRONG'; crlf. ^ self ].
+Stdio stdout << repoPath; lf.
 "We load the application software analyzer"
-[ Metacello new
-    baseline: 'BaselineMap';
-    repository: repository;
-    load ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
+(IceRepositoryCreator new
+	location: repoPath asFileReference;
+	createRepository) register.
+  
+"[ Metacello new
+	baseline: 'BaselineMap';
+	repository: repository;
+	load ] on: MCMergeOrLoadWarning do: [ :warning | warning load ]."
 
 "We identify the unit tests contained in the loaded application"
-unitTests := (TestCase withAllSubclasses select: [ :cls | cls package packageName beginsWith: 'BaselineMap' ]) sorted: [ :c1 :c2 | c1 name < c2 name ].
-
+unitTests := (TestCase withAllSubclasses
+	select: [ :cls | cls package packageName beginsWith: 'BaselineMap' ]) 
+	sorted: [ :c1 :c2 | c1 name < c2 name ].
 
 numberOfPassed := 0.
 "We run the unit tests"
