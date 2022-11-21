@@ -1,11 +1,10 @@
-| path stream repoPath |
+| path stream repoPath unitTests numberOfPassed |
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
-
-Stdio stdout << 'ciPreLoading.st - Adding $GITHUB_WORKSPACE directory to Iceberg: '.
+Stdio stdout << '>>> Adding $GITHUB_WORKSPACE directory to Iceberg: '.
 repoPath := Smalltalk os environment
 	at: 'GITHUB_WORKSPACE'
 	ifAbsent: [ Stdio stdout nextPutAll: 'NOT DEFINED, WRONG'; crlf. ^ self ].
@@ -27,7 +26,7 @@ unitTests := (TestCase withAllSubclasses
 
 numberOfPassed := 0.
 "We run the unit tests"
-unitTests do: [ :unitTestClass |
+unitTests do: [ :unitTestClass | | res |
 	res := unitTestClass buildSuite run.
 	(res hasFailures or: [ res hasErrors ]) ifTrue: [
 
