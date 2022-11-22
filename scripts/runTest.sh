@@ -1,7 +1,8 @@
+echo "Downloading pharo"
 curl -L https://get.pharo.org/64/alpha+vm | bash
 
 # put credentials then pharo can read this file and load the correct repository
-
+echo "Running tests"
 ./pharo --headless Pharo.image ./scripts/runTest.st
 
 FILE=/tmp/result.txt
