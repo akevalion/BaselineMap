@@ -28,7 +28,9 @@ jobs:
           access_token: ${{ github.token }}
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
+      - name: Get Repo name
+        run: echo "REPO_NAME=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
 
       # Runs a single command using the runners shell
       - name: Run unit tests
