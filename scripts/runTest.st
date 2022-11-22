@@ -10,7 +10,7 @@ cout << '>>> Clonning from: '.
 repoPath := env at: 'REPO_NAME'.
 repoPath ifEmpty: [repoPath := env at: 'GITHUB_REPOSITORY'].
 
-branchName := 'master'.
+branchName := env at: 'GITHUB_HEAD_REF'.
 repoPath := 'github://', repoPath,':', branchName.
 cout << repoPath; lf.
 "We load the application software analyzer"
