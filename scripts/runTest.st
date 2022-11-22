@@ -11,7 +11,8 @@ repoPath := env at: 'REPO_NAME'.
 repoPath ifEmpty: [ repoPath := env at: 'GITHUB_REPOSITORY' ].
 
 branchName := env at: 'BRANCH_NAME'.
-branchName ifEmpty: [ branchName := env at: 'GITHUB_REF' ].
+branchName ifEmpty: [ 
+	branchName := ((env at: 'GITHUB_REF') splitOn: '/') last ].
 repoPath := 'github://', repoPath,':', branchName.
 cout << repoPath; lf.
 "We load the application software analyzer"
