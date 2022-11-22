@@ -13,7 +13,8 @@ repoPath ifEmpty: [ repoPath := env at: 'GITHUB_REPOSITORY' ].
 branchName := env at: 'BRANCH_NAME'.
 branchName ifEmpty: [ 
 	branchName := ((env at: 'GITHUB_REF') splitOn: '/') last ].
-repoPath := 'github://', repoPath,':', branchName.
+"repoPath := 'github://', repoPath,':', branchName."
+repoPath := 'gitlocal://', (env at: 'GITHUB_WORKSPACE').
 cout << repoPath; lf.
 "We load the application software analyzer"
 [ Metacello new
