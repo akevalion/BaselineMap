@@ -1,25 +1,23 @@
-| path stream repoPath unitTests numberOfPassed |
+| path stream repoPath unitTests numberOfPassed env cout |
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
-
-Stdio stdout << '>>> Adding $GITHUB_WORKSPACE directory to Iceberg: '.
-repoPath := Smalltalk os environment
-	at: 'GITHUB_WORKSPACE'
-	ifAbsent: [ Stdio stdout nextPutAll: 'NOT DEFINED, WRONG'; crlf. ^ self ].
-Stdio stdout << repoPath; lf.
+env := Smalltalk os environment.
+cout := Stdio stdout.
+cout << '>>> Clonning from: '.
+repoPath := env at: 'REPO_NAME' ifAbsent: [ 
+	env at: 'GITHUB_REPOSITORY' ifAbsent: [ cout << 'Error getting repo name'. ^ self ].
+	].
+branchName := 'master'.
+repoPath := 'github://', repoPath,':', branchName.
+cout << repoPath; lf.
 "We load the application software analyzer"
 [ Metacello new
-	repository: 'gitlocal://', repoPath;
-	baseline: #BaselineMap;
-	load: 'default'.
-	] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
-  
-"[ Metacello new
+	repository: repoPath;
 	baseline: 'BaselineMap';
-	repository: repository;
-	load ] on: MCMergeOrLoadWarning do: [ :warning | warning load ]."
+	load: 'default'
+	] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
 
 "We identify the unit tests contained in the loaded application"
 unitTests := (TestCase withAllSubclasses
