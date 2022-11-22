@@ -1,4 +1,4 @@
-| path stream repoPath unitTests numberOfPassed env cout |
+| path stream repoPath unitTests numberOfPassed env cout branchName |
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
 path asFileReference exists ifTrue: [ path asFileReference delete ].
@@ -6,9 +6,10 @@ stream := path asFileReference writeStream.
 env := Smalltalk os environment.
 cout := Stdio stdout.
 cout << '>>> Clonning from: '.
-repoPath := env at: 'REPO_NAME' ifAbsent: [ 
-	env at: 'GITHUB_REPOSITORY' ifAbsent: [ cout << 'Error getting repo name'. ^ self ].
-	].
+
+repoPath := env at: 'REPO_NAME'.
+repoPath ifEmpty: [repoPath := env at: 'GITHUB_REPOSITORY'].
+
 branchName := 'master'.
 repoPath := 'github://', repoPath,':', branchName.
 cout << repoPath; lf.
