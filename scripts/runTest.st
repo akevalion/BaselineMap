@@ -10,9 +10,10 @@ repoPath := Smalltalk os environment
 	ifAbsent: [ Stdio stdout nextPutAll: 'NOT DEFINED, WRONG'; crlf. ^ self ].
 Stdio stdout << repoPath; lf.
 "We load the application software analyzer"
-(IceRepositoryCreator new
-	location: repoPath asFileReference;
-	createRepository) register.
+Metacello new
+	repository: 'gitlocal://', repoPath;
+	baseline: #BaselineMap;
+	load: 'default'.
   
 "[ Metacello new
 	baseline: 'BaselineMap';
