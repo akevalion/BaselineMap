@@ -30,6 +30,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Repo name
         run: echo "REPO_NAME=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
+      - name: Get Branch name
+        run: echo "BRANCH_NAME=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
         
       - uses: actions/checkout@v3
 
